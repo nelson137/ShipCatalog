@@ -9,9 +9,8 @@ mc = max crew
 '''
 
 
-print('-----START-----')
 
-with open('D:\Projects\Python\Star Citizen\Ships Catalog\\5shipsSourceCode.txt', 'r') as f:
+with open('{}/Git/ShipCatalog/5ShipsSource.txt'.format(path), 'r') as f:
     shipsDataSource = f.read()
 
 allStatsPattern = '''{"id":"\d+","production_status":"[^{]+{[^[]+'''
@@ -19,57 +18,12 @@ allStatsMOS = re.findall(allStatsPattern, shipsDataSource)
 
 ships = OrderedDict()
 
-allModels = []
-byModel = OrderedDict()
-def SortByModel(ship, lastShip=False):
-    global allModels
-
-    allModels.append(ship)
-
-    if lastShip == True:
-        allModels.sort()
-        for ship in allModels:
-            byModel[ship] = ships[ship]
-
-used = [[], [], [], []] # [usedManufacturers, usedProductionstats, usedCapacities, usedMaxcrews]
-byStat = [OrderedDict(), OrderedDict(), OrderedDict(), OrderedDict()] # [byManufacturer, byProductionstat, byCargocapacity, byMaxcrew]
 def SortByStat(stat, ship, lastShip=False):
-    '''stat:
-    0 = manufacturer
-    1 = production status
-    2 = cargo capacity
-    3 = max crew
-    '''
     global used, byStat
-
-    if ship[0] not in used[stat]:
-        used[stat].append(ship[0])
-        byStat[stat][ship[0]] = [ship[1]]
-    else: byStat[stat][ship[0]].append(ship[1])
-
-    if lastShip == True:
-        if stat == 0:
-            mKeys = ['Aegis Dynamics', 'Anvil Aerospace', 'ARGO ASTRONAUTICS', 'Banu', 'Consolidated Outland', 'Crusader Industries', 'Drake Interplanetary', 'Esperia', 'Kruger Intergalactic', 'Musashi Industrial &amp; Starflight Concern', 'Origin Jumpworks GmbH', 'Roberts Space Industries', 'Vanduul', "Xi'An"]
-        else:
-             mKeys = []
-        if stat == 1:
-            psKeys = ['announced', 'in-concept', 'in-production', 'hangar-ready', 'flight-ready']
-        else:
-            psKeys = []
-        if stat == 2:
-            used[2].sort()
-            ccKeys = range(used[2][-1]+1)
-        else:
-            ccKeys = []
-        if stat == 3:
-            used[3].sort()
-            mcKeys = range(used[3][-1]+1)
-        else:
-            mcKeys = []
-        sortKeys = [mKeys, psKeys, ccKeys, mcKeys]
-
-        for k in byStat[stat].keys(): byStat[stat][k].sort()
-        byStat[stat] = sorted(byStat[stat].items(), key=lambda x: sortKeys[stat].index(x[0]))
+    mKeys = ['Aegis Dynamics', 'Anvil Aerospace', 'ARGO ASTRONAUTICS', 'Banu', 'Consolidated Outland', 'Crusader Industries', 'Drake Interplanetary', 'Esperia', 'Kruger Intergalactic', 'Musashi Industrial &amp; Starflight Concern', 'Origin Jumpworks GmbH', 'Roberts Space Industries', 'Vanduul', "Xi'An"]
+    psKeys = ['announced', 'in-concept', 'in-production', 'hangar-ready', 'flight-ready']
+    for k in byStat[stat].keys(): byStat[stat][k].sort()
+    byStat[stat] = sorted(byStat[stat].items(), key=lambda x: sortKeys[stat].index(x[0]))
 
 
 
