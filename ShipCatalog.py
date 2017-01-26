@@ -27,6 +27,7 @@ def SortByStat(stat, ship, lastShip=False):
 
 
 
+#TODO: Check patterns
 modelPattern = r'''(name":")([^"]+)(","focus)'''
 mPattern = r'''(name":")([^"]+)(","known_for)'''
 focusPattern = r'''(focus":")([^"]+)'''
@@ -39,6 +40,7 @@ mcPattern = r'''(maxcrew":")([^"]+)'''
 for statsIndex in range(len(allStatsMOS)):
     allStatsMOS[statsIndex] = re.sub(r'\\', '', allStatsMOS[statsIndex])
 
+    #TODO: Check matching patterns
     model = re.search(modelPattern, allStatsMOS[statsIndex]).group(2)
     m = re.search(mPattern, allStatsMOS[statsIndex]).group(2)
     focus = re.search(focusPattern, allStatsMOS[statsIndex]).group(2)
@@ -47,6 +49,7 @@ for statsIndex in range(len(allStatsMOS)):
     cc = re.search(ccPattern, allStatsMOS[statsIndex]).group(2)
     mc = re.search(mcPattern, allStatsMOS[statsIndex]).group(2)
 
+    #TODO: Check sorting
     if statsIndex == len(allStatsMOS)-1: SortByStat(0, (m, model), lastShip=True)
     else: SortByStat(0, (m, model))
 
@@ -64,9 +67,9 @@ for statsIndex in range(len(allStatsMOS)):
                                 ('focus', focus),
                                 ('cargocapacity', cc),
                                 ('maxcrew', mc),
-                                ('description', description)])
+                                ('description', description)])'''
 
-    stats = [model, m, ps, cc, mc]
+    '''stats = [model, m, ps, cc, mc]
     for i in range(len(stats)):
         if statsIndex == len(allStatsMOS)-1:
             if i == 0: funcs[0](model, lastShip=True)
@@ -74,9 +77,3 @@ for statsIndex in range(len(allStatsMOS)):
         else:
             if i == 0: funcs[0](model)
             else: funcs[i]((stats[i], model))'''
-
-
-
-#print(byMc)
-
-print('-----END-----')
