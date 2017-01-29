@@ -11,7 +11,7 @@ def sortBy(key):
         pass
     
     # SORTING FOR production status
-    if key = 'production status':
+    if key == 'production status':
         pass
     
     # SORTING FOR description

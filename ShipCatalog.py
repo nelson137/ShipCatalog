@@ -1,11 +1,10 @@
 from GetShips import getShips
 from SortShips import sortBy
+from tClass import Ships
 from random import shuffle
 
-ships = getShips()
-
 def main():
-    ships = getShips()
+    '''(ships = getShips()
     
     maxcrews = shuffle(range(5))
 
@@ -16,7 +15,11 @@ def main():
 
     for ship in ships.values():
         print()
-        print(ship)
+        print(ship)'''
+
+    ships = Ships()
+
+    print(ships.manufacturers)
 
 if __name__ == "__main__":
     main()

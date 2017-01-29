@@ -1,10 +1,10 @@
+import platform, requests, re
+from collections import OrderedDict
+
 class Ships:
     def __init__(self):
-        self.source = 'https://robertsspaceindustries.com/ship-specs'
-        self.ships = getShips()
-
-    def getShips(self):
-        # use self.source to download ships-specs source code
+    	# use self.webSource to download ships-specs source code
+        self.webSource = 'https://robertsspaceindustries.com/ship-specs'
 
         system = platform.system().lower()
         if system == "windows":
@@ -14,14 +14,21 @@ class Ships:
         elif system == "linux":
             path = "/home/nelson137"
 
-        with open('{}/Git/ShipCatalog/5ShipsSource.txt'.format(path), 'r') as f:
-            shipsDataSource = f.read()
+        # get code data from file
+        with open('{}/Git/ShipCatalog/sources/5ships.txt'.format(path), 'r') as f:
+            source = f.read()
 
-        allStatsPattern = '''{"id":"\d+","production_status":"[^{]+{[^[]+'''
-        allStatsMOS = re.findall(allStatsPattern, shipsDataSource)
+        # get source code from website
+        source = str(requests.get(self.webSource).content).encode('utf-8').decode('utf-8')
+        print(source[:6000])
+
+        # get ships stats from source code
+        allStatsPat = '''{"id":"\d+","production_status":"[^{]+{[^[]+'''
+        allStats = re.findall(allStatsPat, source)
 
         ships = OrderedDict()
 
+        # patterns for each stat
         modelPat = r'''name":"([^"]+)","focus'''
         mfrPat = r'''name":"([^"]+)","known_for'''
         focusPat = r'''focus":"([^"]+)'''
@@ -30,42 +37,50 @@ class Ships:
         cargocapPat = r'''cargocapacity":"([^"]+)'''
         maxcrewPat = r'''maxcrew":"([^"]+)'''
 
-        for statsIndex in range(len(allStatsMOS)):
-            allStatsMOS[statsIndex] = re.sub(r'\\', '', allStatsMOS[statsIndex])
+        for index in range(len(allStats)):
+            allStats[index] = re.sub(r'\\', '', allStats[index])
 
-            model = re.search(modelPat, allStatsMOS[statsIndex]).group(1)
-            mfr = re.search(mfrPat, allStatsMOS[statsIndex]).group(1)
-            focus = re.search(focusPat, allStatsMOS[statsIndex]).group(1)
-            prodstat = re.search(prodstatPat, allStatsMOS[statsIndex]).group(1)
-            desc = re.search(descPat, allStatsMOS[statsIndex]).group(1)
-            cargocap = re.search(cargocapPat, allStatsMOS[statsIndex]).group(1)
-            maxcrew = re.search(maxcrewPat, allStatsMOS[statsIndex]).group(1)
+            # get stat from source code of each ship
+            model = re.search(modelPat, allStats[index]).group(1)
+            mfr = re.search(mfrPat, allStats[index]).group(1)
+            focus = re.search(focusPat, allStats[index]).group(1)
+            prodstat = re.search(prodstatPat, allStats[index]).group(1)
+            desc = re.search(descPat, allStats[index]).group(1)
+            cargocap = re.search(cargocapPat, allStats[index]).group(1)
+            maxcrew = re.search(maxcrewPat, allStats[index]).group(1)
 
-            ships[model] = OrderedDict([('model', model), ('manufacturer', mfr), ('focus', focus), ('production status', prodstat), ('description', desc), ('cargo capacity', cargocap), ('max crew', maxcrew)])
+            # put stats into OrderedDict
+            ships[model] = OrderedDict([('model', model),
+            							('manufacturer', mfr),
+            							('focus', focus),
+            							('production status', prodstat),
+            							('description', desc),
+            							('cargo capacity', cargocap),
+            							('max crew', maxcrew)])
 
-        return ships
+        # compile list of all manufacturers
+        manufacturers = []
+        for ship in ships.values():
+        	manufacturers.append(ship['manufacturer'])
+        manufacturers = list(set(manufacturers))
 
-    def sortBy(key):
+        self.ships = ships
+        self.manufacturers = manufacturers
+
+    def sortBy(self, key):
         def byABC(key):
-            return
+            pass
 
-        def byList(key):
+        def byList(key, lst):
             pass
 
         if key == 'model':
             byABC(key)
         elif key == 'manufacturer':
-            byList(key)
+            byList(key, [])
         elif key == 'production status':
-            byList(key)
+            byList(key, [])
         elif key == 'cargo capacity':
-            byList(key)
+            byList(key, [])
         elif key == 'max crew':
-            byList(key)
-
-
-
-
-
-
-
+            byList(key, [])

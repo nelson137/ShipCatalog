@@ -10,7 +10,7 @@ def getShips():
     elif system == "linux":
         path = "/home/nelson137"
 
-    with open('{}/Git/ShipCatalog/5ShipsSource.txt'.format(path), 'r') as f:
+    with open('{}/Git/ShipCatalog/sources/5ships.txt'.format(path), 'r') as f:
         shipsDataSource = f.read()
 
     allStatsPattern = '''{"id":"\d+","production_status":"[^{]+{[^[]+'''
@@ -37,6 +37,12 @@ def getShips():
         cargocap = re.search(cargocapPat, allStatsMOS[statsIndex]).group(1)
         maxcrew = re.search(maxcrewPat, allStatsMOS[statsIndex]).group(1)
 
-        ships[model] = OrderedDict([('model', model), ('manufacturer', mfr), ('focus', focus), ('production status', prodstat), ('description', desc), ('cargo capacity', cargocap), ('max crew', maxcrew)])
+        ships[model] = OrderedDict([('model', model),
+                                    ('manufacturer', mfr),
+                                    ('focus', focus),
+                                    ('production status', prodstat),
+                                    ('description', desc),
+                                    ('cargo capacity', cargocap),
+                                    ('max crew', maxcrew)])
 
     return ships
