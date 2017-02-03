@@ -4,22 +4,19 @@ from GetShips import getShips
 class Ships:
     def __init__(self):
         self.ships = getShips('Git/ShipCatalog/sources/5ships.txt')
-        self.byModel = OrderedDict(sorted(self.ships.items(),
-                                          key=lambda item: item[1]['model']))
-        self.byManufacturer = OrderedDict(sorted(self.ships.items(),
-                                                 key=lambda item: (item[1]['manufacturer'], item[1]['model'])))
-        self.byProductionStatus = OrderedDict(sorted(self.ships.items(),
-                                                     key=lambda item: item[1]['production status'])) # sort by custom list
-        self.byCargoCapacity = OrderedDict(sorted(self.ships.items(),
-                                                  key=lambda item: (item[1]['cargo capacity'], item[1]['model'])))
-        self.byMaxCrew = OrderedDict(sorted(self.ships.items(),
-                                            key=lambda item: (item[1]['max crew'], item[1]['model'])))
+        self.numShips = len(self.ships.items())
 
-    def getMfrs(self):
-        '''compile list of all manufacturers'''
+        self.byModel = OrderedDict(sorted(self.ships.items(), key=lambda item: item[1]['model']))
+        self.byManufacturer = OrderedDict(sorted(self.ships.items(), key=lambda item: (item[1]['manufacturer'], item[1]['model'])))
+        # for all ships #self.byProductionStatus = OrderedDict(sorted(self.ships.items(), key=lambda item: (['flight-ready', 'hangar-ready', 'in-production', 'in-concept', 'announced'].index(item[1]['production status']), item[1]['model'])))
+        self.byProductionStatus = OrderedDict(sorted(self.ships.items(), key=lambda item: (['flight-ready'].index(item[1]['production status']), item[1]['model'])))
+        self.byCargoCapacity = OrderedDict(sorted(self.ships.items(), key=lambda item: (item[1]['cargo capacity'], item[1]['model'])))
+        self.byMaxCrew = OrderedDict(sorted(self.ships.items(), key=lambda item: (item[1]['max crew'], item[1]['model'])))
 
-        manufacturers = []
+    def getAllOfKey(self, key):
+        '''returns unique list of all of key in ships'''
+        all_ = []
         for ship in self.ships.values():
-        	manufacturers.append(ship['manufacturer'])
+        	all_.append(ship[key])
 
-        return list(set(manufacturers))
+        return list(set(all_))
