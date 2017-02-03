@@ -1,22 +1,20 @@
-import requests, platform, re
-from collections import OrderedDict
+"""self.webSource = 'https://robertsspaceindustries.com/ship-specs'
+    self.pWebSource = 'https://lethe.ca/phproxy/index.php?q=aHR0cHM6Ly9yb2JlcnRzc3BhY2VpbmR1c3RyaWVzLmNvbS9zaGlwLXNwZWNz'
 
-def getShips(srcLoc, srcType='text'):
-    if srcType == 'html':
-        # get raw source code from website
-        source = str(requests.get(srcLoc).content).encode('utf-8').decode('utf-8')
-    else:
-        system = platform.system().lower()
-        if system == "windows":
-            path = "D:/Projects"
-        elif system == "mac":
-            path = "/Users/Nelson"
-        elif system == "linux":
-            path = "/home/nelson137"
+    system = platform.system().lower()
+    if system == "windows":
+        path = "D:/Projects"
+    elif system == "mac":
+        path = "/Users/Nelson"
+    elif system == "linux":
+        path = "/home/nelson137"
 
-        # get raw sourec code from file
-        with open('{}/{}'.format(path, srcLoc), 'r') as f:
-            source = f.read()
+    # get code data from file
+    with open('{}/Git/ShipCatalog/sources/5ships.txt'.format(path), 'r') as f:
+        source = f.read()
+
+    # get source code from website
+    #source = str(requests.get(self.webSource).content).encode('utf-8').decode('utf-8')
 
     # get ships stats from source code
     allStatsPat = '''{"id":"\d+","production_status":"[^{]+{[^[]+'''
@@ -54,4 +52,9 @@ def getShips(srcLoc, srcType='text'):
         							('cargo capacity', cargocap),
         							('max crew', maxcrew)])
 
-    return ships
+    self.ships = ships
+    self.byModel = OrderedDict(sorted(ships.items(), key=lambda item: item[1]['model']))
+    self.byManufacturer = OrderedDict(sorted(ships.items(), key=lambda item: (item[1]['manufacturer'], item[1]['model'])))
+    # byList #self.byProductionStatus = OrderedDict(sorted(ships.items(), key=lambda item: item[1]['production status']))
+    self.byCargoCapacity = OrderedDict(sorted(ships.items(), key=lambda item: (item[1]['cargo capacity'], item[1]['model'])))
+    self.byMaxCrew = OrderedDict(sorted(ships.items(), key=lambda item: (item[1]['max crew'], item[1]['model'])))"""
