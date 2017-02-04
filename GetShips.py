@@ -5,14 +5,17 @@ def getShips(srcLoc, srcType='text'):
     if srcType == 'html':
         # get raw source code from website
         source = str(requests.get(srcLoc).content).encode('utf-8').decode('utf-8')
+    elif srcType == 'test':
+        with open('/home/nelson137/Projects/{}'.format(srcLoc), 'w') as f:
+            data = f.read()
     else:
         system = platform.system().lower()
         if system == "windows":
             path = "D:/Projects"
         elif system == "mac":
-            path = "/Users/Nelson"
+            path = "/Users/Nelson/Projects"
         elif system == "linux":
-            path = "/home/nelson137"
+            path = "/home/nelson137/Projects"
 
         # get raw sourec code from file
         with open('{}/{}'.format(path, srcLoc), 'r') as f:
