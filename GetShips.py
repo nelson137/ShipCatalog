@@ -5,9 +5,6 @@ def getShips(srcLoc, srcType='text'):
     if srcType == 'html':
         # get raw source code from website
         source = str(requests.get(srcLoc).content).encode('utf-8').decode('utf-8')
-    elif srcType == 'test':
-        with open('/home/nelson137/Projects/{}'.format(srcLoc), 'w') as f:
-            data = f.read()
     else:
         system = platform.system().lower()
         if system == "windows":
