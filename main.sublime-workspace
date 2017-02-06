@@ -28,7 +28,7 @@
 	"buffers":
 	[
 	],
-	"build_system": "Packages/Python/Python.sublime-build",
+	"build_system": "",
 	"build_system_choices":
 	[
 		[
@@ -156,8 +156,7 @@
 	},
 	"expanded_folders":
 	[
-		"/Users/Nelson/Projects/Git/ship-catalog",
-		"/Users/Nelson/Projects/Git/ship-catalog/sources"
+		"/Users/Nelson/Projects/Git/ship-catalog"
 	],
 	"file_history":
 	[
@@ -292,7 +291,7 @@
 	],
 	"find":
 	{
-		"height": 35.0
+		"height": 23.0
 	},
 	"find_in_files":
 	{
@@ -389,7 +388,7 @@
 		"height": 128.0
 	},
 	"pinned_build_system": "Packages/User/Python3.sublime-build",
-	"project": "ship-catalog.sublime-project",
+	"project": "main.sublime-project",
 	"replace":
 	{
 		"height": 42.0
