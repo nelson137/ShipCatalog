@@ -1,10 +1,18 @@
-import requests, platform, re
+import requests, re, platform
 from collections import OrderedDict
 
 def getShips(srcLoc, srcType='text'):
     if srcType == 'html':
         # get raw source code from website
-        source = str(requests.get(srcLoc).content).encode('utf-8').decode('utf-8')
+        #source = requests.get('https://robertsspaceindustries.com/ship-specs').content.decode()
+        source = requests.get(srcLoc).content.decode()
+
+        newlinePat = '\n'
+        htmlPat = '<!DOCTYPE.+App.app = new |}\);.+<\/html>'
+        inbetweenPat = '\[{"id":"\d+","slug"(.+?}){86}'
+        source = re.sub(newlinePat, '', source)
+        source = re.sub(htmlPat, '', source)
+        source = re.sub(inbetweenPat, '', source)
     else:
         system = platform.system().lower()
         if system == "windows":
@@ -19,19 +27,20 @@ def getShips(srcLoc, srcType='text'):
             source = f.read()
 
     # get ships stats from source code
-    allStatsPat = '''{"id":"\d+","production_status":"[^{]+{[^[]+'''
+    #allStatsPat = '{"id":"\d+","production_status":"[^{]+{[^[]+'
+    allStatsPat = '{"id":"\d+","production_status":"[^{]+{([^,]+,){3}'
     allStats = re.findall(allStatsPat, source)
 
     ships = OrderedDict()
 
     # patterns for each stat
-    modelPat = r'''name":"([^"]+)","focus'''
-    mfrPat = r'''name":"([^"]+)","known_for'''
-    focusPat = r'''focus":"([^"]+)'''
-    prodstatPat = r'''production_status":"([^"]+)'''
-    descPat = r'''description":"([^"]+)","tagline'''
-    cargocapPat = r'''cargocapacity":"([^"]+)'''
-    maxcrewPat = r'''maxcrew":"([^"]+)'''
+    modelPat = r'name":"([^"]+)","focus'
+    mfrPat = r'name":"([^"]+)","known_for'
+    focusPat = r'focus":"([^"]+)'
+    prodstatPat = r'production_status":"([^"]+)'
+    descPat = r'description":"([^"]+)","tagline'
+    cargocapPat = r'cargocapacity":"([^"]+)'
+    maxcrewPat = r'maxcrew":"([^"]+)'
 
     for index in range(len(allStats)):
         allStats[index] = re.sub(r'\\', '', allStats[index])
