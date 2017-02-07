@@ -4,7 +4,6 @@ from collections import OrderedDict
 def getShips(srcLoc, srcType='text'):
     if srcType == 'html':
         # get raw source code from website
-        #source = requests.get('https://robertsspaceindustries.com/ship-specs').content.decode()
         source = requests.get(srcLoc).content.decode()
 
         newlinePat = '\n'

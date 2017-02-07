@@ -1,6 +1,4 @@
 from Ships import Ships
-#from GetShips import getShips
-#from SortShips import sortBy
 #from random import shuffle
 
 def main():

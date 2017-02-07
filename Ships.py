@@ -4,7 +4,7 @@ from GetShips import getShips
 class Ships:
     def __init__(self):
         #self.ships = getShips('https://robertsspaceindustries.com/ship-specs', 'html')
-        self.ships = getShips('Git/ShipCatalog/sources/5ships.txt')
+        self.ships = getShips('Git/ShipCatalog/sources/allships.txt')
         self.numShips = len(self.ships.items())
 
         self.byModel = OrderedDict(sorted(self.ships.items(), key=lambda item: item[1]['model']))
