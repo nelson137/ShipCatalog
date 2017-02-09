@@ -1,5 +1,6 @@
 import requests, re, platform
 from collections import OrderedDict
+from myplatform import MyPlatform
 
 def getShips(srcLoc, srcType='text'):
     if srcType == 'html':
@@ -13,16 +14,8 @@ def getShips(srcLoc, srcType='text'):
         source = re.sub(htmlPat, '', source)
         source = re.sub(inbetweenPat, '', source)
     else:
-        system = platform.system().lower()
-        if system == "windows":
-            path = "D:/Projects"
-        elif system == "mac":
-            path = "/Users/Nelson/Projects"
-        elif system == "linux":
-            path = "/home/nelson137/Projects"
-
         # get raw sourec code from file
-        with open('{}/{}'.format(path, srcLoc), 'r') as f:
+        with open('{}/{}'.format(MyPlatform().path, srcLoc), 'r') as f:
             source = f.read()
 
     # get ships stats from source code
