@@ -1,5 +1,4 @@
 from Ships import Ships
-#from random import shuffle
 
 def main():
     ships = Ships()
@@ -10,7 +9,7 @@ def main():
     #ordered = list(ships.byCargoCapacity.items())
     #ordered = list(ships.byMaxCrew.items())
 
-    keys = ['manufacturer', 'model', 'production status']
+    keys = ['manufacturer']
     for key in keys:
         print(ships.getAllOfKey(key))
 
