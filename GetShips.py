@@ -5,9 +5,12 @@ from collections import OrderedDict
 def getShips(srcLoc, srcType='text'):
     '''Returns OrderedDict of ships from source'''
 
-    def checkNull(stat):
+    def checkNull(stat, isNum=False):
         '''Removes leading '"' if stat not "null"'''
-        return 'null' if stat == 'null' else stat[1:-1]
+        if isNum:
+            return 0 if stat == 'null' else int(stat[1:-1])
+        else:
+            return 'null' if stat == 'null' else stat[1:-1]
 
     if srcType == 'html':
         # get raw source code from website
@@ -51,8 +54,8 @@ def getShips(srcLoc, srcType='text'):
         focus =    checkNull(re.search(focusPat, allStats[index]).group(1))
         prodstat = checkNull(re.search(prodstatPat, allStats[index]).group(1))
         desc =     checkNull(re.search(descPat, allStats[index]).group(1))
-        cargocap = checkNull(re.search(cargocapPat, allStats[index]).group(1))
-        maxcrew =  checkNull(re.search(maxcrewPat, allStats[index]).group(1))
+        cargocap = checkNull(re.search(cargocapPat, allStats[index]).group(1), True)
+        maxcrew =  checkNull(re.search(maxcrewPat, allStats[index]).group(1), True)
 
         # put stats into OrderedDict
         ships[model] = OrderedDict([('model', model), ('manufacturer', mfr), ('focus', focus), ('production status', prodstat), ('description', desc), ('cargo capacity', cargocap), ('max crew', maxcrew)])

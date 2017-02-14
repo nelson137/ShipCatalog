@@ -11,7 +11,6 @@ class Ships:
         self.byModel = OrderedDict(sorted(self.ships.items(), key=lambda item: item[1]['model']))
         self.byManufacturer = OrderedDict(sorted(self.ships.items(), key=lambda item: (item[1]['manufacturer'], item[1]['model'])))
         self.byProductionStatus = OrderedDict(sorted(self.ships.items(), key=lambda item: (['flight-ready', 'hangar-ready', 'ready', 'in-production', 'in-concept', 'announced'].index(item[1]['production status']), item[1]['model'])))
-        #self.byProductionStatus = OrderedDict(sorted(self.ships.items(), key=lambda item: (['flight-ready'].index(item[1]['production status']), item[1]['model'])))
         self.byCargoCapacity = OrderedDict(sorted(self.ships.items(), key=lambda item: (item[1]['cargo capacity'], item[1]['model'])))
         self.byMaxCrew = OrderedDict(sorted(self.ships.items(), key=lambda item: (item[1]['max crew'], item[1]['model'])))
 
