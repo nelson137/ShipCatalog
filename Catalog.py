@@ -1,5 +1,6 @@
 from Ships import Ships
 from tkinter import *
+from subprocess import *
 
 def main():
 	def outputTk():
@@ -16,9 +17,16 @@ def main():
 		print('updated')
 
 	def setText():
-		text.config(text=listbox.get(listbox.curselection()))
+		global lastListSelection, listSelection
+		try:
+			listSelection = listbox1.get(listbox1.curselection())
+			if listSelection != lastListSelection:
+				text.config(text=listbox1.get(listbox1.curselection()))
+			lastListSelection = listSelection
+		except: pass
 
-	# Kill Tkinter window if running
+	ps_aux = Popen(['ps'], stdout=PIPE, shell=True).communicate()[0].decode()
+	print(ps_aux)
 
 	ships = Ships()
 
@@ -46,6 +54,10 @@ def main():
 	for item in ['one', 'three', 'two', 'zero', 'four']:
 		listbox1.insert(END, item)
 	listbox1.pack(side=LEFT)
+	global lastListSelection, listSelection
+	lastListSelection = 'last'
+	listSelection = 'current'
+
 
 	# Listbox 2
 	listbox2 = Listbox(frame)
@@ -60,6 +72,12 @@ def main():
 	# Set Text button
 	setTextButton = Button(root, text='Set Text', command=setText)
 	canvas.create_window(10,250, window=setTextButton, anchor=NW)
+
+	def quit():
+		pass
+
+	quitButton = Button(root, text='Quit', command=quit)
+	canvas.create_window(10,canvas.winfo_width()-10, window=quitButton, anchor=SW)
 
 	root.mainloop()
 
