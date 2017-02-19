@@ -9,7 +9,6 @@ def main():
 		lastSortSelection = sortSelection
 
 	def seeMoreInfo():
-
 		indexes = ['model', 'manufacturer', 'production status','cargo capacity', 'max crew']
 		listboxes = [modelListbox, mfrListbox, prodstatListbox, cargocapListbox, maxcrewListbox]
 		shipsList = list(allShips.items())
