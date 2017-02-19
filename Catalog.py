@@ -17,17 +17,6 @@ def main():
 			lastListSelection = listSelection
 		except: pass
 
-	# Kill window if one is already running
-	'''ps_aux = Popen(['ps', '-A'], stdout=PIPE, shell=True).communicate()[0].decode()
-	python_instances = [p for p in ps_aux.split('\n') if 'python' in p]
-	pidPat = r'(\d+).+python'
-	for p in python_instances:
-		pid = re.search(pidPat, p).group(1)
-		# if file empty:
-		with open('{}/Git/ship-catalog/windows.txt'.format(MyPlatform().path), 'a') as f:
-			f.write('{}\n'.format(pid))
-		# else: kill each process using pids'''
-
 	ships = Ships()
 
 	root = Tk()
