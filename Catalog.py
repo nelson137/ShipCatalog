@@ -1,4 +1,4 @@
-from tkinter import *
+from modules.tkinter import *
 from Ships import Ships
 
 def main():
@@ -22,23 +22,38 @@ def main():
 	root = Tk()
 	root.title('Star Citizen Ship Catalog')
 
-	# Listbox 1
-	listbox1 = Listbox(root)
-	for item in ['one', 'three', 'two', 'zero', 'four']:
-		listbox1.insert(END, item)
-	listbox1.grid(column=0, row=0, padx=(5,0), pady=(5,5))
-	global lastListSelection, listSelection
-	lastListSelection = 'last'
-	listSelection = 'current'
+	# Model Listbox
+	modelListbox = Listbox(root)
+	for item in ships.getAllOf('model'):
+		modelListbox.insert(END, item)
+	modelListbox.grid(column=0, row=0, padx=(0,5), pady=(5,5))
 
-	# Listbox 2
-	listbox2 = Listbox(root)
-	for item in ['0', '1', '2', '3', '4']:
-		listbox2.insert(END, item)
-	listbox2.grid(column=1, row=0, padx=(0,5), pady=(5,5))
+	# Manufacturer Listbox
+	mfrListbox = Listbox(root)
+	for item in ships.getAllOf('manufacturer'):
+		mfrListbox.insert(END, item)
+	mfrListbox.grid(column=1, row=0, padx=(0,5), pady=(5,5))
+
+	# Production Status Listbox
+	prodstatListbox = Listbox(root, width=12)
+	for item in ships.getAllOf('production status'):
+		prodstatListbox.insert(END, item)
+	prodstatListbox.grid(column=2, row=0, padx=(0,5), pady=(5,5))
+
+	# Cargo Capacity Listbox
+	cargocapListbox = Listbox(root, width=7)
+	for item in ships.getAllOf('cargo capacity'):
+		cargocapListbox.insert(END, item)
+	cargocapListbox.grid(column=3, row=0, padx=(0,5), pady=(5,5))
+
+	# Max Crew Listbox
+	maxcrewListbox = Listbox(root, width=7)
+	for item in ships.getAllOf('max crew'):
+		maxcrewListbox.insert(END, item)
+	maxcrewListbox.grid(column=4, row=0, padx=(0,5), pady=(5,5))
 
 	# Drop down menu
-	sortOptions = ['Choose One', 'model', 'manufacturer', 'production status', 'cargo capacity', 'max crew']
+	sortOptions = ['Choose One', 'Model', 'Manufacturer', 'Production Status', 'Cargo Capacity', 'Max Crew']
 	var = StringVar()
 	var.set(sortOptions[0])
 	sortByMenu = OptionMenu(root, var, *sortOptions, command=onSortByUpdate)

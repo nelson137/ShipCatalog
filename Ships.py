@@ -14,10 +14,18 @@ class Ships:
         self.byCargoCapacity = OrderedDict(sorted(self.ships.items(), key=lambda item: (item[1]['cargo capacity'], item[1]['model'])))
         self.byMaxCrew = OrderedDict(sorted(self.ships.items(), key=lambda item: (item[1]['max crew'], item[1]['model'])))
 
-    def getAllOfKey(self, key):
+    def getAllUniqueOf(self, key):
         '''Returns unique list of all of key in Ships'''
         all_ = []
         for ship in self.ships.values():
         	all_.append(ship[key])
 
         return list(set(all_))
+
+    def getAllOf(self, key):
+        all_ = []
+        for ship in self.ships.values():
+            all_.append(ship[key])
+
+        return all_
+
