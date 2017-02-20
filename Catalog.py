@@ -19,10 +19,15 @@ def main():
 				index = lb.curselection()[0]
 
 		if index != 'no':
-			key = list(shipsObj.allOrders[sortOptionsVar.get().lower()].values())[index]['model']
+			sortBy = sortOptionsVar.get().lower()
+			ship = list(shipsObj.allOrders[sortBy].values())[index]
+			key = ship['model']
 
 			iroot = Tk()
 			iroot.title('%s Info' % key)
+
+			label = Label(frame, text=ship['model'])
+			label.grid()
 
 			iroot.mainloop()
 
