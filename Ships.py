@@ -14,8 +14,7 @@ class Ships:
         self.byCargoCapacity = OrderedDict(sorted(self.ships.items(), key=lambda item: (item[1]['cargo capacity'], item[1]['model'])))
         self.byMaxCrew = OrderedDict(sorted(self.ships.items(), key=lambda item: (item[1]['max crew'], item[1]['model'])))
 
-    def getAllOf(self, key, order='ships', unique=False):
-        allOrders = {
+        self.allOrders = {
             'ships' : self.ships,
             'model' : self.byModel,
             'manufacturer' : self.byManufacturer,
@@ -23,8 +22,10 @@ class Ships:
             'cargo capacity' : self.byCargoCapacity,
             'max crew' : self.byMaxCrew
         }
+
+    def getAllOf(self, key, order='ships', unique=False):
         all_ = []
-        for ship in allOrders[order].values():
+        for ship in self.allOrders[order].values():
             all_.append(ship[key])
 
         return all_ if not unique else list(set(all_))

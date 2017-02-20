@@ -12,18 +12,19 @@ def main():
 
 		lastSortSelection = sortSelection
 
-	def seeMoreInfo():
-		shipsList = list(allShips.items())
-		key = False
+	def moreInfo():
+		index = 'no'
 		for lb in listboxes.values():
 			if lb.curselection():
-				key = shipsList[lb.curselection()[0]][0] # key for ship
-		
-		if key:
-			iRoot = Tk()
-			iRoot.title('%s Info' % key)
+				index = lb.curselection()[0]
 
-			iRoot.mainloop()
+		if index != 'no':
+			key = list(shipsObj.allOrders[sortOptionsVar.get().lower()].values())[index]['model']
+
+			iroot = Tk()
+			iroot.title('%s Info' % key)
+
+			iroot.mainloop()
 
 	def yview(*args):
 		modelListbox.yview(*args)
@@ -110,9 +111,9 @@ def main():
 	global lastSortSelection
 	lastSortSelection = 'last'
 
-	# See info Button
-	seeInfoButton = Button(root, text='See More Info', command=seeMoreInfo)
-	seeInfoButton.grid(column=2, row=1)
+	# More info Button
+	moreInfoButton = Button(root, text='More Info', command=moreInfo)
+	moreInfoButton.grid(column=2, row=1)
 
 	root.mainloop()
 
