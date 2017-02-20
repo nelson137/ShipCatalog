@@ -23,13 +23,13 @@ def main():
 			ship = list(shipsObj.allOrders[sortBy].values())[index]
 			key = ship['model']
 
-			iroot = Tk()
-			iroot.title('%s Info' % key)
+			top = Toplevel()
+			top.title('%s Info' % key)
 
-			label = Label(frame, text=ship['model'])
+			label = Label(top, text='test')
 			label.grid()
 
-			iroot.mainloop()
+			top.mainloop()
 
 	def yview(*args):
 		modelListbox.yview(*args)
