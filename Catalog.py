@@ -4,19 +4,20 @@ from Ships import Ships
 def main():
 	def onSortByUpdate(sortSelection):
 		global lastSortSelection
-		if sortSelection != lastSortSelection and sortSelection != 'Choose One':
-			pass
+		if sortSelection != lastSortSelection:
+			for stat in listboxes.keys():
+				listboxes[stat].delete(0, END)
+				for item in shipsObj.getAllOf(stat, order=sortSelection.lower()):
+					listboxes[stat].insert(END, item)
+
 		lastSortSelection = sortSelection
 
 	def seeMoreInfo():
-		indexes = ['model', 'manufacturer', 'production status','cargo capacity', 'max crew']
-		listboxes = [modelListbox, mfrListbox, prodstatListbox, cargocapListbox, maxcrewListbox]
 		shipsList = list(allShips.items())
 		key = False
-		for lb in listboxes:
+		for lb in listboxes.values():
 			if lb.curselection():
 				key = shipsList[lb.curselection()[0]][0] # key for ship
-				print(key)
 		
 		if key:
 			iRoot = Tk()
@@ -59,7 +60,7 @@ def main():
 	
 	prodstatFrame = Frame(root)
 	prodstatScrollbar = Scrollbar(prodstatFrame, orient=VERTICAL)
-	prodstatListbox = Listbox(prodstatFrame, width=12, yscrollcommand=prodstatScrollbar.set)
+	prodstatListbox = Listbox(prodstatFrame, yscrollcommand=prodstatScrollbar.set)
 	prodstatScrollbar.config(command=yview)
 	for item in shipsObj.getAllOf('production status', order='model'):
 		prodstatListbox.insert(END, item)
@@ -69,7 +70,7 @@ def main():
 	
 	cargocapFrame = Frame(root)
 	cargocapScrollbar = Scrollbar(cargocapFrame, orient=VERTICAL)
-	cargocapListbox = Listbox(cargocapFrame, width=7, yscrollcommand=cargocapScrollbar.set)
+	cargocapListbox = Listbox(cargocapFrame, yscrollcommand=cargocapScrollbar.set)
 	cargocapScrollbar.config(command=yview)
 	for item in shipsObj.getAllOf('cargo capacity', order='model'):
 		cargocapListbox.insert(END, item)
@@ -79,7 +80,7 @@ def main():
 	
 	maxcrewFrame = Frame(root)
 	maxcrewScrollbar = Scrollbar(maxcrewFrame, orient=VERTICAL)
-	maxcrewListbox = Listbox(maxcrewFrame, width=7, yscrollcommand=maxcrewScrollbar.set)
+	maxcrewListbox = Listbox(maxcrewFrame, yscrollcommand=maxcrewScrollbar.set)
 	maxcrewScrollbar.config(command=yview)
 	for item in shipsObj.getAllOf('max crew', order='model'):
 		maxcrewListbox.insert(END, item)
@@ -87,22 +88,31 @@ def main():
 	maxcrewScrollbar.pack(side=RIGHT, fill=Y)
 	maxcrewFrame.grid(column=4, row=0)
 
+	listboxes = {
+		'model' : modelListbox,
+		'manufacturer' : mfrListbox,
+		'production status' : prodstatListbox,
+		'cargo capacity' : cargocapListbox,
+		'max crew' : maxcrewListbox
+	}
+
+	# SortBy Label
+	sortByLabel = Label(root, text='Sort By:')
+	sortByLabel.grid(column=0, row=1, sticky=E)
+
 	# SortBy OptionMenu
-	sortOptions = ['Choose One', 'Model', 'Manufacturer', 'Production Status', 'Cargo Capacity', 'Max Crew']
+	sortOptions = ['Model', 'Manufacturer', 'Production Status', 'Cargo Capacity', 'Max Crew']
 	sortOptionsVar = StringVar()
 	sortOptionsVar.set(sortOptions[0])
 	sortByMenu = OptionMenu(root, sortOptionsVar, *sortOptions, command=onSortByUpdate)
 	sortByMenu.config(width=16)
-	sortByMenu.grid(column=0, row=1, padx=(5,5), pady=(0,5))
+	sortByMenu.grid(column=1, row=1)
 	global lastSortSelection
 	lastSortSelection = 'last'
 
 	# See info Button
 	seeInfoButton = Button(root, text='See More Info', command=seeMoreInfo)
-	seeInfoButton.grid(column=1, row=1)
-
-	label = Label(root, text='a')
-	label.grid(column=2, row=1)
+	seeInfoButton.grid(column=2, row=1)
 
 	root.mainloop()
 
