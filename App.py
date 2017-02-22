@@ -10,16 +10,26 @@ class TopApp():
 
 		font = Font(top, size=12)
 
-		focus = Label(top, text=ship['focus'], font=font)
-		focus.grid()
+		focusTitleLabel = Label(top, text='Focus:', justify=RIGHT, font=font)
+		focusTitleLabel.grid(column=0, row=0, sticky=NE)
 
-		desc = Label(top, text=ship['description'], font=font)
-		desc.grid()
+		focusLabel = Label(top, text=ship['focus'], justify=LEFT, font=font)
+		focusLabel.grid(column=1, row=0, sticky=W)
+
+		descTitleLabel = Label(top, text='Description:', justify=RIGHT, font=font)
+		descTitleLabel.grid(column=0, row=1, sticky=NE)
+
+		descLabel = Label(top, text=ship['description'], justify=LEFT, wraplength=500, font=font)
+		descLabel.grid(column=1, row=1, sticky=W)
 
 		top.mainloop()
 
 class MainApp():
-	"""Application GUI class"""
+	"""Application GUI class
+
+	TODO:
+		Bind mousewheel to all scrollbars
+	"""
 	def __init__(self, root):
 		self.catalog = Catalog()
 
@@ -33,6 +43,8 @@ class MainApp():
 		modelScrollbar = Scrollbar(modelFrame, orient=VERTICAL)
 		modelListbox = Listbox(modelFrame, font=font, yscrollcommand=modelScrollbar.set)
 		modelScrollbar.config(command=self.yview)
+		modelListbox.bind('<Button-4>', self.onMouseWheel)
+		modelListbox.bind('<Button-5>', self.onMouseWheel)
 		for item in self.catalog.getAllOf('model', order='model'): modelListbox.insert(END, item)
 		modelListbox.pack(side=LEFT)
 		modelScrollbar.pack(side=RIGHT, fill=Y)
@@ -43,6 +55,8 @@ class MainApp():
 		mfrScrollbar = Scrollbar(mfrFrame, orient=VERTICAL)
 		mfrListbox = Listbox(mfrFrame, font=font, yscrollcommand=mfrScrollbar.set)
 		mfrScrollbar.config(command=self.yview)
+		mfrListbox.bind('<Button-4>', self.onMouseWheel)
+		mfrListbox.bind('<Button-5>', self.onMouseWheel)
 		for item in self.catalog.getAllOf('manufacturer', order='model'): mfrListbox.insert(END, item)
 		mfrListbox.pack(side=LEFT)
 		mfrScrollbar.pack(side=RIGHT, fill=Y)
@@ -53,6 +67,8 @@ class MainApp():
 		prodstatScrollbar = Scrollbar(prodstatFrame, orient=VERTICAL)
 		prodstatListbox = Listbox(prodstatFrame, font=font, yscrollcommand=prodstatScrollbar.set)
 		prodstatScrollbar.config(command=self.yview)
+		prodstatListbox.bind('<Button-4>', self.onMouseWheel)
+		prodstatListbox.bind('<Button-5>', self.onMouseWheel)
 		for item in self.catalog.getAllOf('production status', order='model'): prodstatListbox.insert(END, item)
 		prodstatListbox.pack(side=LEFT)
 		prodstatScrollbar.pack(side=RIGHT, fill=Y)
@@ -63,6 +79,8 @@ class MainApp():
 		cargocapScrollbar = Scrollbar(cargocapFrame, orient=VERTICAL)
 		cargocapListbox = Listbox(cargocapFrame, font=font, yscrollcommand=cargocapScrollbar.set)
 		cargocapScrollbar.config(command=self.yview)
+		cargocapListbox.bind('<Button-4>', self.onMouseWheel)
+		cargocapListbox.bind('<Button-5>', self.onMouseWheel)
 		for item in self.catalog.getAllOf('cargo capacity', order='model'): cargocapListbox.insert(END, item)
 		cargocapListbox.pack(side=LEFT)
 		cargocapScrollbar.pack(side=RIGHT, fill=Y)
@@ -73,6 +91,8 @@ class MainApp():
 		maxcrewScrollbar = Scrollbar(maxcrewFrame, orient=VERTICAL)
 		maxcrewListbox = Listbox(maxcrewFrame, font=font, yscrollcommand=maxcrewScrollbar.set)
 		maxcrewScrollbar.config(command=self.yview)
+		maxcrewListbox.bind('<Button-4>', self.onMouseWheel)
+		maxcrewListbox.bind('<Button-5>', self.onMouseWheel)
 		for item in self.catalog.getAllOf('max crew', order='model'): maxcrewListbox.insert(END, item)
 		maxcrewListbox.pack(side=LEFT)
 		maxcrewScrollbar.pack(side=RIGHT, fill=Y)
@@ -105,6 +125,15 @@ class MainApp():
 
 		self.root.mainloop()
 
+	def yview(self, *args):
+		for lb in self.listboxes.values():
+			lb.yview(*args)
+
+	def onMouseWheel(self, event):
+		for lb in self.listboxes.values():
+			lb.yview('scroll', event.delta, 'units')
+		return "break"
+
 	def onSortByUpdate(self, selection):
 		if selection != self.lastSelection:
 			for stat in self.listboxes.keys():
@@ -125,10 +154,6 @@ class MainApp():
 			top = Toplevel()
 			topApp = TopApp(top, ship)
 			top.mainloop()
-
-	def yview(self, *args):
-		for lb in self.listboxes.values():
-			lb.yview(*args)
 
 if __name__ == '__main__':
 	root = Tk()
