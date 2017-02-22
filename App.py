@@ -3,7 +3,7 @@ from modules.tkinter.font import Font
 from Catalog import Catalog
 
 class TopApp():
-	'''More Info TopApp GUI class'''
+	'''More Info Toplevel GUI class'''
 	def __init__(self, top, ship):
 		self.top = top
 		self.top.title('%s Info' % ship['model'])
