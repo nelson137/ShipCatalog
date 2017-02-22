@@ -3,7 +3,7 @@ from modules.tkinter.font import Font
 from Catalog import Catalog
 
 class TopApp():
-	"""docstring for TopApp"""
+	'''More Info TopApp GUI class'''
 	def __init__(self, top, ship):
 		self.top = top
 		self.top.title('%s Info' % ship['model'])
@@ -25,11 +25,11 @@ class TopApp():
 		top.mainloop()
 
 class MainApp():
-	"""Application GUI class
+	'''Main Application GUI class
 
 	TODO:
 		Bind mousewheel to all scrollbars
-	"""
+	'''
 	def __init__(self, root):
 		self.catalog = Catalog()
 
