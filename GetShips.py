@@ -23,10 +23,8 @@ def getShips(srcLoc, srcType='text'):
         source = re.sub(htmlPat, '', source)
         source = re.sub(inbetweenPat, '', source)
     else:
-        path = MyPlatform().path
-
         # get raw source code from file
-        with open('{}/{}'.format(path, srcLoc), 'r') as f:
+        with open('%s' % srcLoc, 'r') as f:
             source = f.read()
 
     # get ships stats from source code

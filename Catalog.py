@@ -7,6 +7,7 @@ class Catalog:
     def __init__(self):
         #self.ships = getShips('https://robertsspaceindustries.com/ship-specs', 'html')
         parentDir = dirname(abspath(__file__))
+        print(parentDir)
         ships = getShips('%s/sources/all-ships.txt' % parentDir)
         prodstats = ['flight-ready', 'hangar-ready', 'ready', 'in-production', 'in-concept', 'announced']
 
