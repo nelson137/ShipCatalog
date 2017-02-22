@@ -1,1 +1,1 @@
-# ShipCatalog
+# ship-catalog
