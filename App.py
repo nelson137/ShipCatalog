@@ -99,11 +99,11 @@ class MainApp():
 		maxcrewFrame.grid(column=4, row=0)
 
 		self.listboxes = {
-			'model' : modelListbox,
-			'manufacturer' : mfrListbox,
-			'production status' : prodstatListbox,
-			'cargo capacity' : cargocapListbox,
-			'max crew' : maxcrewListbox
+			'model': modelListbox,
+			'manufacturer': mfrListbox,
+			'production status': prodstatListbox,
+			'cargo capacity': cargocapListbox,
+			'max crew': maxcrewListbox
 		}
 
 		# SortBy Label
