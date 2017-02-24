@@ -35,25 +35,25 @@ def getShips(srcLoc, srcType='text'):
     ships = OrderedDict()
 
     # patterns for each stat
-    modelPat =    r'name":(null|"[^"]+"),"focus'
-    mfrPat =      r'name":(null|"[^"]+"),"known_for'
-    focusPat =    r'focus":(null|"[^"]+")'
+    modelPat = r'name":(null|"[^"]+"),"focus'
+    mfrPat = r'name":(null|"[^"]+"),"known_for'
+    focusPat = r'focus":(null|"[^"]+")'
     prodstatPat = r'production_status":(null|"[^"]+")'
-    descPat =     r'description":(null|".+"),"tagline' # r'description":(null|"[^"]+"),"tagline'
+    descPat = r'description":(null|".+"),"tagline' # r'description":(null|"[^"]+"),"tagline'
     cargocapPat = r'cargocapacity":(null|"[^"]+")'
-    maxcrewPat =  r'maxcrew":(null|"[^"]+")'
+    maxcrewPat = r'maxcrew":(null|"[^"]+")'
 
     for index in range(len(allStats)):
         allStats[index] = re.sub(r'\\', '', allStats[index])
 
         # get stat from source code of each ship
-        model =    checkNull(re.search(modelPat, allStats[index]).group(1))
-        mfr =      checkNull(re.search(mfrPat, allStats[index]).group(1))
-        focus =    checkNull(re.search(focusPat, allStats[index]).group(1))
+        model = checkNull(re.search(modelPat, allStats[index]).group(1))
+        mfr = checkNull(re.search(mfrPat, allStats[index]).group(1))
+        focus = checkNull(re.search(focusPat, allStats[index]).group(1))
         prodstat = checkNull(re.search(prodstatPat, allStats[index]).group(1))
-        desc =     checkNull(re.search(descPat, allStats[index]).group(1))
+        desc = checkNull(re.search(descPat, allStats[index]).group(1))
         cargocap = checkNull(re.search(cargocapPat, allStats[index]).group(1), True)
-        maxcrew =  checkNull(re.search(maxcrewPat, allStats[index]).group(1), True)
+        maxcrew = checkNull(re.search(maxcrewPat, allStats[index]).group(1), True)
 
         # put stats into OrderedDict
         ships[model] = OrderedDict([('model', model), ('manufacturer', mfr), ('focus', focus), ('production status', prodstat), ('description', desc), ('cargo capacity', cargocap), ('max crew', maxcrew)])
