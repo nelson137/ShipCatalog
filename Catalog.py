@@ -18,12 +18,12 @@ class Catalog:
         byMaxCrew = OrderedDict(sorted(ships.items(), key=lambda item: (item[1]['max crew'], item[1]['model'])))
 
         self.allOrders = {
-            'ships' : ships,
-            'model' : byModel,
-            'manufacturer' : byManufacturer,
-            'production status' : byProductionStatus,
-            'cargo capacity' : byCargoCapacity,
-            'max crew' : byMaxCrew
+            'ships': ships,
+            'model': byModel,
+            'manufacturer': byManufacturer,
+            'production status': byProductionStatus,
+            'cargo capacity': byCargoCapacity,
+            'max crew': byMaxCrew
         }
 
     def getAllOf(self, key, order='ships', unique=False):
