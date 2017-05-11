@@ -1,6 +1,6 @@
-from modules.tkinter import *
+from catalog import Catalog
+from modules.tkinter import END, LEFT, NE, RIGHT, VERTICAL, W, Frame, Label, Listbox, OptionMenu, Scrollbar, StringVar, Tk
 from modules.tkinter.font import Font
-from Catalog import Catalog
 
 class TopApp():
 	'''More Info Toplevel GUI class'''

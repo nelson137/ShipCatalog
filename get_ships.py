@@ -1,6 +1,7 @@
-import re, modules.requests
-from modules.myplatform import MyPlatform
 from collections import OrderedDict
+from modules.myplatform import MyPlatform
+from modules.requests import get
+from re import findall, search, sub
 
 def getShips(srcLoc, srcType='text'):
     '''Returns OrderedDict of ships from source'''
@@ -14,14 +15,14 @@ def getShips(srcLoc, srcType='text'):
 
     if srcType == 'html':
         # get raw source code from website
-        source = requests.get(srcLoc).content.decode()
+        source = get(srcLoc).content.decode()
 
         newlinePat = '\n'
         htmlPat = '<!DOCTYPE.+App\.app = new |}\);.+<\/html>'
         inbetweenPat = '\[{"id":"\d+","slug"(.+?}){86}'
-        source = re.sub(newlinePat, '', source)
-        source = re.sub(htmlPat, '', source)
-        source = re.sub(inbetweenPat, '', source)
+        source = sub(newlinePat, '', source)
+        source = sub(htmlPat, '', source)
+        source = sub(inbetweenPat, '', source)
     else:
         # get raw source code from file
         with open('%s' % srcLoc, 'r') as f:
@@ -30,7 +31,7 @@ def getShips(srcLoc, srcType='text'):
     # get ships stats from source code
     allStatsPat = r'{"id":"\d+","production_status":"[^{]+{[^[]+'
     #allStatsPat = r'{"id":"\d+","production_status":"[^{]+{([^,]+,){3}'
-    allStats = re.findall(allStatsPat, source)
+    allStats = findall(allStatsPat, source)
 
     ships = OrderedDict()
 
@@ -44,16 +45,16 @@ def getShips(srcLoc, srcType='text'):
     maxcrewPat = r'maxcrew":(null|"[^"]+")'
 
     for index in range(len(allStats)):
-        allStats[index] = re.sub(r'\\', '', allStats[index])
+        allStats[index] = sub(r'\\', '', allStats[index])
 
         # get stat from source code of each ship
-        model = checkNull(re.search(modelPat, allStats[index]).group(1))
-        mfr = checkNull(re.search(mfrPat, allStats[index]).group(1))
-        focus = checkNull(re.search(focusPat, allStats[index]).group(1))
-        prodstat = checkNull(re.search(prodstatPat, allStats[index]).group(1))
-        desc = checkNull(re.search(descPat, allStats[index]).group(1))
-        cargocap = checkNull(re.search(cargocapPat, allStats[index]).group(1), True)
-        maxcrew = checkNull(re.search(maxcrewPat, allStats[index]).group(1), True)
+        model = checkNull(search(modelPat, allStats[index]).group(1))
+        mfr = checkNull(search(mfrPat, allStats[index]).group(1))
+        focus = checkNull(search(focusPat, allStats[index]).group(1))
+        prodstat = checkNull(search(prodstatPat, allStats[index]).group(1))
+        desc = checkNull(search(descPat, allStats[index]).group(1))
+        cargocap = checkNull(search(cargocapPat, allStats[index]).group(1), True)
+        maxcrew = checkNull(search(maxcrewPat, allStats[index]).group(1), True)
 
         # put stats into OrderedDict
         ships[model] = OrderedDict([('model', model), ('manufacturer', mfr), ('focus', focus), ('production status', prodstat), ('description', desc), ('cargo capacity', cargocap), ('max crew', maxcrew)])

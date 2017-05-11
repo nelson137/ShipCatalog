@@ -1,6 +1,6 @@
-from os.path import dirname, abspath 
 from collections import OrderedDict
-from GetShips import getShips
+from os.path import abspath, dirname
+from get_ships import getShips
 
 class Catalog:
     '''Catalog object class'''

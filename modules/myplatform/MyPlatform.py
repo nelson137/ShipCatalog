@@ -14,6 +14,6 @@ class MyPlatform:
             elif dist[1] == '16.04': # Ubuntu-Desktop Linux
                 self.path = '/home/limbo/Projects'
             else:
-                sel.path = 'Unknown System'
+                self.path = 'Unknown System'
         else:
             self.path = 'Unknown System'
