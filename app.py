@@ -3,7 +3,7 @@ from modules.tkinter import END, LEFT, NE, RIGHT, VERTICAL, W, Frame, Label, Lis
 from modules.tkinter.font import Font
 
 class TopApp():
-	'''More Info Toplevel GUI class'''
+	"""More Info Toplevel GUI class"""
 	def __init__(self, top, ship):
 		self.top = top
 		self.top.title('%s Info' % ship['model'])
@@ -25,11 +25,11 @@ class TopApp():
 		top.mainloop()
 
 class MainApp():
-	'''Main Application GUI class
+	"""Main Application GUI class
 
 	TODO:
 		Bind mousewheel to all scrollbars
-	'''
+	"""
 	def __init__(self, root):
 		self.catalog = Catalog()
 
