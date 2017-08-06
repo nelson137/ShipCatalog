@@ -1,11 +1,10 @@
 from collections import OrderedDict
-from modules.myplatform import MyPlatform
-from modules.requests import get
+from myplatform import MyPlatform
+from requests import get
 from re import findall, search, sub
 
 def getShips(srcLoc, srcType='text'):
-    '''Returns OrderedDict of ships from source'''
-
+    """Returns OrderedDict of ships from source"""
     def checkNull(stat, isNum=False):
         '''Removes leading '"' if stat is not "null"'''
         if isNum:

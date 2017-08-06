@@ -4,6 +4,7 @@ from get_ships import getShips
 
 class Catalog:
     """Catalog object class"""
+    
     def __init__(self):
         #self.ships = getShips('https://robertsspaceindustries.com/ship-specs', 'html')
         parentDir = dirname(abspath(__file__))

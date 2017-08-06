@@ -1,9 +1,10 @@
 from catalog import Catalog
-from modules.tkinter import END, LEFT, NE, RIGHT, VERTICAL, W, Frame, Label, Listbox, OptionMenu, Scrollbar, StringVar, Tk
-from modules.tkinter.font import Font
+from tkinter import END, LEFT, NE, RIGHT, VERTICAL, W, Frame, Label, Listbox, OptionMenu, Scrollbar, StringVar, Tk, Y, E, Button, Toplevel
+from tkinter.font import Font
 
 class TopApp():
 	"""More Info Toplevel GUI class"""
+
 	def __init__(self, top, ship):
 		self.top = top
 		self.top.title('%s Info' % ship['model'])
@@ -30,6 +31,7 @@ class MainApp():
 	TODO:
 		Bind mousewheel to all scrollbars
 	"""
+    
 	def __init__(self, root):
 		self.catalog = Catalog()
 
