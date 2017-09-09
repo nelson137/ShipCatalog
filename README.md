@@ -1,1 +1,1 @@
-# ship-catalog
+# ship-catalog-py
